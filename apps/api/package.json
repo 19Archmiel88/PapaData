@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "tsx watch src/Serwer.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/Serwer.js"
+    "start": "node dist/Serwer.js",
+    "test:e2e": "tsx --test src/**/*.e2e.test.ts"
   },
   "keywords": [],
   "author": "",

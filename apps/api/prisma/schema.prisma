@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Uzytkownik {
+  id               String   @id @default(cuid())
+  email            String   @unique
+  hashHasla        String
+  zweryfikowanyAt  DateTime?
+  utworzonyAt      DateTime @default(now())
+
+  kody             KodWeryfikacyjny[]
+}
+
+model KodWeryfikacyjny {
+  id              String   @id @default(cuid())
+  uzytkownikId    String
+  kodHash         String
+  probyNieudane   Int      @default(0)
+  wygasaAt        DateTime
+  wykorzystanyAt  DateTime?
+  utworzonyAt     DateTime @default(now())
+
+  uzytkownik      Uzytkownik @relation(fields: [uzytkownikId], references: [id], onDelete: Cascade)
+
+  @@index([uzytkownikId])
+}

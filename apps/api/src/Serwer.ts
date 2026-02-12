@@ -1,5 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import { RouterDashboard } from "./Moduly/Dashboard/RouterDashboard.js";
+import { RouterPlatform } from "./Moduly/Platform/RouterPlatform.js";
 
 // odpowiada za konfigurację serwera HTTP
 const serwer = Fastify({
@@ -16,6 +18,12 @@ await serwer.register(cors, {
 serwer.get("/health", async () => {
   return { ok: true };
 });
+
+// odpowiada za routing dashboard runtime TENANT
+await serwer.register(RouterDashboard);
+
+// odpowiada za routing platformowy: integracje, billing, callbacki, observability
+await serwer.register(RouterPlatform);
 
 // odpowiada za start nasłuchiwania
 const PORT = Number(process.env.PORT ?? 3001);
